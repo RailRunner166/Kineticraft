@@ -37,23 +37,23 @@ public class FarmLimiter extends Mechanic {
                 && getEntityCount(evt.getEntity(), RADIUS) >= 32);// There are more chickens here than we allow, don't spawn another one.
     }
 
-    @EventHandler
-    public void onEntityDeath(EntityDeathEvent evt) {
-        LivingEntity e = evt.getEntity();
-        EntityType type = evt.getEntityType();
-        double dmg = getPlayerDamage(e);
-        boolean limit = dmg < getDamageNeeded(e) || (type == EntityType.PIG_ZOMBIE && dmg < 100);
-        if (!IGNORE.contains(type) && limit)
-            evt.getDrops().clear();
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onEntityDamage(EntityDamageByEntityEvent evt) {
-        Entity e = evt.getEntity();
-        Entity a = evt.getDamager();
-        if (a instanceof Player || (a instanceof Projectile && ((Projectile) a).getShooter() instanceof Player))
-            addPlayerDamage(e, evt.getDamage()); // Count all damage dealt by players.
-    }
+//    @EventHandler
+//    public void onEntityDeath(EntityDeathEvent evt) {
+//        LivingEntity e = evt.getEntity();
+//        EntityType type = evt.getEntityType();
+//        double dmg = getPlayerDamage(e);
+//        boolean limit = dmg < getDamageNeeded(e) || (type == EntityType.PIG_ZOMBIE && dmg < 100);
+//        if (!IGNORE.contains(type) && limit)
+//            evt.getDrops().clear();
+//    }
+//
+//    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+//    public void onEntityDamage(EntityDamageByEntityEvent evt) {
+//        Entity e = evt.getEntity();
+//        Entity a = evt.getDamager();
+//        if (a instanceof Player || (a instanceof Projectile && ((Projectile) a).getShooter() instanceof Player))
+//            addPlayerDamage(e, evt.getDamage()); // Count all damage dealt by players.
+//    }
 
     @EventHandler(ignoreCancelled = true) // Prevent items that entities pickup from being lost on death.
     public void onItemPickup(EntityPickupItemEvent evt) {
